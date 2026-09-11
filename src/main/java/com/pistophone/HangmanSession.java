@@ -18,7 +18,7 @@ public class HangmanSession {
 
     public HangmanSession(String word) {
         this.word = word;
-        hint = new StringBuilder();
+        hint = new StringBuilder(word.length());
         hint.repeat(BLANK, word.length());
         triedLetters = new HashSet<>();
         wordLetters = word.chars().mapToObj(c -> (char) c).collect(Collectors.toSet());
