@@ -23,8 +23,6 @@ public class Main {
             } else if (input == PLAY_GAME) {
                 var game = new HangmanSession(fileReader.getRandomWord());
                 game.start();
-            } else {
-                IO.println("Хотите поиграть в виселицу? (%c/%c): ".formatted(PLAY_GAME, QUIT_GAME));
             }
         }
     }
