@@ -47,7 +47,7 @@ public class HangmanSession {
         }
         if (isGameLost()) {
             IO.println("Вы проиграли!");
-            IO.println(HangmanArt.HANGMAN_STATES[6]);
+            IO.println(HangmanArt.HANGMAN_STATES[MAX_MISTAKES]);
             IO.println("Слово: %s".formatted(word));
         } else if (isGameWon()) {
             IO.println("Вы выиграли!");
