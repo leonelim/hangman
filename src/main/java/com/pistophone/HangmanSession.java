@@ -4,28 +4,33 @@ import com.pistophone.exception.BadInputException;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-public class HangmanGame {
+public class HangmanSession {
     private static final int MAX_MISTAKES = 6;
     private static final char BLANK = '_';
-    private final InputReader INPUT_READER = new InputReader();
 
-    public void start(String word) {
-        int mistakeCount = 0;
-        StringBuilder hint = new StringBuilder(word.length());
+    private final String word;
+    private int mistakeCount;
+    private final StringBuilder hint;
+    private final Set<Character> triedLetters;
+    private final Set<Character> wordLetters;
+
+    public HangmanSession(String word) {
+        this.word = word;
+        hint = new StringBuilder();
         hint.repeat(BLANK, word.length());
-        Set<Character> triedLetters = new HashSet<>();
-        Set<Character> wordLetters = new HashSet<>();
-        word.chars().mapToObj(c -> (char) c).forEach(wordLetters::add);
-        runGameLoop(word, hint, triedLetters, wordLetters, mistakeCount);
+        triedLetters = new HashSet<>();
+        wordLetters = word.chars().mapToObj(c -> (char) c).collect(Collectors.toSet());
     }
-    private void runGameLoop(String word, StringBuilder hint, Set<Character> triedLetters,
-                             Set<Character> wordLetters, int mistakeCount) {
-        while (!isGameOver(mistakeCount, hint)) {
-            printGameState(hint, mistakeCount, triedLetters);
+
+    public void start() {
+        InputReader inputReader = new InputReader();
+        while (!isGameOver()) {
+            printGameState();
             char guess;
             try {
-                guess = INPUT_READER.getLetter("Буква?: ");
+                guess = inputReader.getLetter("Буква?: ");
             } catch (BadInputException e) {
                 IO.println("Ввод должен быть одной буквой Кириллицы");
                 continue;
@@ -34,39 +39,45 @@ public class HangmanGame {
                 continue;
             }
             if (wordLetters.contains(guess)) {
-                revealLetters(hint, word, guess);
+                revealLetters(guess);
             } else {
                 ++mistakeCount;
             }
             triedLetters.add(guess);
         }
-        if (mistakeCount == MAX_MISTAKES) {
+        if (isGameLost()) {
             IO.println("Вы проиграли!");
             IO.println(HangmanArt.HANGMAN_STATES[6]);
-        } else {
+        } else if (isGameWon()) {
             IO.println("Вы выиграли!");
         }
     }
-    private void revealLetters(StringBuilder hint, String word, char guess) {
+    private void revealLetters(char guess) {
         for (int i = 0; i < word.length(); ++i) {
             if (word.charAt(i) == guess) {
                 hint.setCharAt(i, guess);
             }
         }
     }
-    private void printGameState(StringBuilder hint, int mistakeCount, Set<Character> triedLetters) {
-        printHint(hint);
+    private void printGameState() {
+        printHint();
         IO.println("ошибки: " + mistakeCount);
         IO.println("вы пробовали: " + triedLetters);
         IO.println(HangmanArt.HANGMAN_STATES[mistakeCount]);
     }
-    private void printHint(StringBuilder hint) {
+    private void printHint() {
         for (int i = 0; i < hint.length(); ++i) {
             IO.print(hint.charAt(i) + " ");
         }
         IO.println();
     }
-    private boolean isGameOver(int mistakeCount, StringBuilder hint) {
+    private boolean isGameOver() {
         return hint.indexOf(String.valueOf(BLANK)) == -1 || mistakeCount == MAX_MISTAKES;
+    }
+    private boolean isGameLost() {
+        return mistakeCount == 6;
+    }
+    private boolean isGameWon() {
+        return hint.indexOf(String.valueOf(BLANK)) != -1;
     }
 }

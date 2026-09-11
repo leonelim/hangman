@@ -21,8 +21,8 @@ public class Main {
             if (input == QUIT_GAME) {
                 hasQuit = true;
             } else if (input == PLAY_GAME) {
-                var game = new HangmanGame();
-                game.start(fileReader.getRandomWord());
+                var game = new HangmanSession(fileReader.getRandomWord());
+                game.start();
             } else {
                 IO.println("Хотите поиграть в виселицу? (%c/%c): ".formatted(PLAY_GAME, QUIT_GAME));
             }
