@@ -9,8 +9,7 @@ public class Main {
     static void main() {
         FileReader fileReader = new FileReader();
         InputReader inputReader = new InputReader();
-        boolean hasQuit = false;
-        while (!hasQuit) {
+        while (true) {
             char input;
             try {
                 input = inputReader.getLetter("Хотите поиграть в виселицу? (%c/%c): ".formatted(PLAY_GAME, QUIT_GAME));
@@ -19,10 +18,10 @@ public class Main {
                 continue;
             }
             if (input == QUIT_GAME) {
-                hasQuit = true;
+                break;
             } else if (input == PLAY_GAME) {
-                var game = new HangmanSession(fileReader.getRandomWord());
-                game.start();
+                var hangmanSession = new HangmanSession(fileReader.getRandomWord());
+                hangmanSession.start();
             }
         }
     }
