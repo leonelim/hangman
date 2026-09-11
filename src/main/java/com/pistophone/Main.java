@@ -13,7 +13,7 @@ public class Main {
         while (!hasQuit) {
             char input;
             try {
-                input = inputReader.getLetter("Хотите поиграть в виселицу? (д/н): ");
+                input = inputReader.getLetter("Хотите поиграть в виселицу? (%c/%c): ".formatted(PLAY_GAME, QUIT_GAME));
             } catch (BadInputException e) {
                 IO.println("Ввод должен быть одной буквой Кириллицы");
                 continue;
@@ -24,7 +24,7 @@ public class Main {
                 var game = new HangmanGame();
                 game.start(fileReader.getRandomWord());
             } else {
-                IO.println("Хотите поиграть в виселицу? (д/н): ");
+                IO.println("Хотите поиграть в виселицу? (%c/%c): ".formatted(PLAY_GAME, QUIT_GAME));
             }
         }
     }

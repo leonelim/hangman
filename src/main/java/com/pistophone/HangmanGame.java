@@ -7,12 +7,13 @@ import java.util.Set;
 
 public class HangmanGame {
     private static final int MAX_MISTAKES = 6;
+    private static final char BLANK = '_';
     private final InputReader INPUT_READER = new InputReader();
 
     public void start(String word) {
         int mistakeCount = 0;
         StringBuilder hint = new StringBuilder(word.length());
-        hint.repeat("_", word.length());
+        hint.repeat(BLANK, word.length());
         Set<Character> triedLetters = new HashSet<>();
         Set<Character> wordLetters = new HashSet<>();
         word.chars().mapToObj(c -> (char) c).forEach(wordLetters::add);
@@ -66,6 +67,6 @@ public class HangmanGame {
         IO.println();
     }
     private boolean isGameOver(int mistakeCount, StringBuilder hint) {
-        return hint.indexOf("_") == -1 || mistakeCount == MAX_MISTAKES;
+        return hint.indexOf(String.valueOf(BLANK)) == -1 || mistakeCount == MAX_MISTAKES;
     }
 }
