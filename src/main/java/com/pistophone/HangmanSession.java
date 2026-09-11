@@ -75,9 +75,9 @@ public class HangmanSession {
         return hint.indexOf(String.valueOf(BLANK)) == -1 || mistakeCount == MAX_MISTAKES;
     }
     private boolean isGameLost() {
-        return mistakeCount == 6;
+        return mistakeCount == MAX_MISTAKES;
     }
     private boolean isGameWon() {
-        return hint.indexOf(String.valueOf(BLANK)) != -1;
+        return hint.indexOf(String.valueOf(BLANK)) == -1;
     }
 }
