@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class HangmanSession {
-    private static final int MAX_MISTAKES = 6;
+    private static final int GAME_OVER_MISTAKES = 6;
     private static final char BLANK = '_';
 
     private final String word;
@@ -47,7 +47,7 @@ public class HangmanSession {
         }
         if (isGameLost()) {
             IO.println("Вы проиграли!");
-            IO.println(HangmanArt.HANGMAN_STATES[MAX_MISTAKES]);
+            IO.println(HangmanArt.HANGMAN_STATES[GAME_OVER_MISTAKES]);
             IO.println("Слово: %s".formatted(word));
         } else if (isGameWon()) {
             IO.println("Вы выиграли!");
@@ -73,10 +73,10 @@ public class HangmanSession {
         IO.println();
     }
     private boolean isGameOver() {
-        return hint.indexOf(String.valueOf(BLANK)) == -1 || mistakeCount == MAX_MISTAKES;
+        return hint.indexOf(String.valueOf(BLANK)) == -1 || mistakeCount == GAME_OVER_MISTAKES;
     }
     private boolean isGameLost() {
-        return mistakeCount == MAX_MISTAKES;
+        return mistakeCount == GAME_OVER_MISTAKES;
     }
     private boolean isGameWon() {
         return hint.indexOf(String.valueOf(BLANK)) == -1;
