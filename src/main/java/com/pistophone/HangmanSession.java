@@ -48,6 +48,7 @@ public class HangmanSession {
         if (isGameLost()) {
             IO.println("Вы проиграли!");
             IO.println(HangmanArt.HANGMAN_STATES[6]);
+            IO.println("Слово: %s".formatted(word));
         } else if (isGameWon()) {
             IO.println("Вы выиграли!");
         }
@@ -60,10 +61,10 @@ public class HangmanSession {
         }
     }
     private void printGameState() {
-        printHint();
         IO.println("ошибки: " + mistakeCount);
         IO.println("вы пробовали: " + triedLetters);
         IO.println(HangmanArt.HANGMAN_STATES[mistakeCount]);
+        printHint();
     }
     private void printHint() {
         for (int i = 0; i < hint.length(); ++i) {
