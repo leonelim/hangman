@@ -8,10 +8,12 @@ public class HangmanArt {
 |
 |
 |
+|
 """, """
  ___
 |/   |
 |    *
+|
 |
 |
 |
